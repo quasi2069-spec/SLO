@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Надёжные облигации — надёжные технологии инвестирования</title>
+  <meta name="description" content="Таблицы лучших облигаций, флоатеров и ОФЗ-ПД с актуальными параметрами, оперативные чаты и помощь в управлении портфелем.">
+  <meta name="theme-color" content="#fbfbfd">
+  <style>
+    /* Глобальные переменные (префикс g_) */
+    :root {
+      --g_bg: #fbfbfd;
+      --g_surface: #ffffff;
+      --g_muted: #f5f5f7;
+      --g_ink: #1d1d1f;
+      --g_ink-soft: #6e6e73;
+      --g_line: rgba(0, 0, 0, .08);
+      --g_accent: #0a6cff;
+      --g_accent-ink: #ffffff;
+      --g_dark: #0b0b0f;
+      --g_dark-ink: #f5f5f7;
+      --g_glass: rgba(251, 251, 253, .72);
+      --g_radius: 28px;
+      --g_shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 12px 40px rgba(0, 0, 0, .06);
+      --g_font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --g_wrap: 1120px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --g_bg: #000000;
+        --g_surface: #161618;
+        --g_muted: #1c1c1e;
+        --g_ink: #f5f5f7;
+        --g_ink-soft: #a1a1a6;
+        --g_line: rgba(255, 255, 255, .1);
+        --g_accent: #4d94ff;
+        --g_accent-ink: #000000;
+        --g_dark: #161618;
+        --g_glass: rgba(0, 0, 0, .7);
+        --g_shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 40px rgba(0, 0, 0, .5);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      margin: 0;
+      font-family: var(--g_font);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--g_ink);
+      background: var(--g_bg);
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, p { margin: 0; }
+    :focus-visible { outline: 3px solid var(--g_accent); outline-offset: 3px; border-radius: 8px; }
+
+    .wrap { width: min(100% - 40px, var(--g_wrap)); margin-inline: auto; }
+
+    /* ---------- Навигация ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding-top: env(safe-area-inset-top, 0px);
+      background: var(--g_glass);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--g_line);
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -.01em;
+    }
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #3b8bff, #0a3ea8);
+      position: relative;
+      flex: none;
+    }
+    .brand-mark::before, .brand-mark::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      height: 3px;
+      border-radius: 2px;
+      background: #fff;
+    }
+    .brand-mark::before { top: 8px; opacity: .55; }
+    .brand-mark::after { top: 14px; right: 11px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      color: var(--g_ink-soft);
+    }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--g_ink); }
+    .nav-links .nav-cta {
+      color: var(--g_accent-ink);
+      background: var(--g_accent);
+      padding: 7px 16px;
+      border-radius: 980px;
+      font-weight: 500;
+    }
+    .nav-links .nav-cta:hover { color: var(--g_accent-ink); opacity: .88; }
+
+    /* Меню для телефона без JavaScript */
+    #menu-toggle { position: absolute; opacity: 0; pointer-events: none; }
+    .burger { display: none; width: 44px; height: 44px; cursor: pointer; position: relative; margin-right: -10px; }
+    .burger span, .burger span::before {
+      position: absolute;
+      left: 12px;
+      width: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--g_ink);
+      transition: transform .3s, top .3s;
+    }
+    .burger span { top: 21px; }
+    .burger span::before { content: ""; left: 0; top: 6px; }
+    #menu-toggle:checked + .nav-bar .burger span { transform: rotate(45deg); }
+    #menu-toggle:checked + .nav-bar .burger span::before { top: 0; transform: rotate(-90deg); }
+    #menu-toggle:focus-visible + .nav-bar .burger { outline: 3px solid var(--g_accent); border-radius: 12px; }
+
+    /* ---------- Кнопки ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 26px;
+      border-radius: 980px;
+      font-size: 17px;
+      font-weight: 500;
+      transition: transform .2s, opacity .2s, background .2s;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: var(--g_accent); color: var(--g_accent-ink); }
+    .btn-primary:hover { opacity: .9; }
+    .btn-ghost { color: var(--g_accent); }
+    .btn-ghost:hover { background: color-mix(in srgb, var(--g_accent) 10%, transparent); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: clamp(56px, 9vw, 112px) 0 clamp(48px, 7vw, 88px); overflow: hidden; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 7.2vw, 80px);
+      line-height: 1.03;
+      letter-spacing: -.035em;
+      font-weight: 700;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(100deg, #0a6cff 10%, #00b8a9 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: block;
+    }
+    .hero .lead {
+      margin-top: 24px;
+      max-width: 30em;
+      font-size: clamp(18px, 2.2vw, 22px);
+      line-height: 1.4;
+      color: var(--g_ink-soft);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px 12px; margin-top: 36px; }
+
+    /* Превью таблицы облигаций */
+    .preview {
+      --l_row: 52px;
+      background: var(--g_surface);
+      border: 1px solid var(--g_line);
+      border-radius: var(--g_radius);
+      box-shadow: var(--g_shadow);
+      padding: 22px 22px 10px;
+      transform: perspective(1400px) rotateY(-7deg) rotateX(3deg);
+    }
+    .preview-tabs { display: flex; gap: 6px; padding: 4px; background: var(--g_muted); border-radius: 980px; width: fit-content; margin-bottom: 18px; }
+    .preview-tabs span { font-size: 13px; padding: 6px 14px; border-radius: 980px; color: var(--g_ink-soft); }
+    .preview-tabs span:first-child { background: var(--g_surface); color: var(--g_ink); box-shadow: 0 1px 3px rgba(0, 0, 0, .12); font-weight: 500; }
+    .preview-head, .preview-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .preview-head { font-size: 12px; color: var(--g_ink-soft); padding: 0 4px 10px; border-bottom: 1px solid var(--g_line); }
+    .preview-row { height: var(--l_row); padding: 0 4px; border-bottom: 1px solid var(--g_line); animation: row-in .7s cubic-bezier(.2, .8, .2, 1) backwards; }
+    .preview-row:last-child { border-bottom: 0; }
+    .preview-row:nth-of-type(2) { animation-delay: .08s; }
+    .preview-row:nth-of-type(3) { animation-delay: .16s; }
+    .preview-row:nth-of-type(4) { animation-delay: .24s; }
+    .preview-row:nth-of-type(5) { animation-delay: .32s; }
+    .bar { height: 10px; border-radius: 6px; background: var(--g_muted); }
+    .bar.w1 { width: 82%; }
+    .bar.w2 { width: 58%; }
+    .bar.w3 { width: 70%; }
+    .bar.hi { background: linear-gradient(90deg, #0a6cff, #00b8a9); opacity: .85; }
+    @keyframes row-in { from { opacity: 0; transform: translateY(14px); } }
+
+    /* ---------- Секции ---------- */
+    .section { padding: clamp(56px, 8vw, 112px) 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto clamp(36px, 5vw, 60px); }
+    .section h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      font-weight: 700;
+    }
+    .section-head p { margin-top: 16px; font-size: clamp(17px, 2vw, 21px); color: var(--g_ink-soft); line-height: 1.4; }
+
+    /* Витрина таблиц */
+    .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+    .card {
+      --l_pad: clamp(26px, 4vw, 44px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 40px;
+      min-height: 320px;
+      padding: var(--l_pad);
+      border-radius: var(--g_radius);
+      background: var(--g_muted);
+      overflow: hidden;
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+    }
+    .card:hover { transform: scale(1.012); }
+    .card h3 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; letter-spacing: -.025em; font-weight: 700; }
+    .card p { margin-top: 12px; color: var(--g_ink-soft); max-width: 26em; }
+    .card .more { font-size: 17px; font-weight: 500; color: var(--g_accent); }
+    .card .more::after { content: " \203A"; }
+    .card-wide { grid-column: span 4; background: linear-gradient(135deg, #0a3ea8 0%, #0a6cff 55%, #00b8a9 120%); color: #fff; }
+    .card-wide p { color: rgba(255, 255, 255, .82); }
+    .card-wide .more { color: #fff; }
+    .card-side { grid-column: span 2; }
+    .card-half { grid-column: span 3; }
+    .card-wide .ghost-num {
+      position: absolute;
+      right: -10px;
+      top: -30px;
+      font-size: 220px;
+      font-weight: 800;
+      letter-spacing: -.06em;
+      color: rgba(255, 255, 255, .1);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* ---------- Услуги (тёмный блок) ---------- */
+    .dark { background: var(--g_dark); color: var(--g_dark-ink); }
+    .dark .section-head p { color: #a1a1a6; }
+    .services { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .service {
+      padding: clamp(28px, 4vw, 48px);
+      border-radius: var(--g_radius);
+      background: #1c1c1e;
+      border: 1px solid rgba(255, 255, 255, .08);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #3b8bff, #0a3ea8);
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .service h3 { font-size: clamp(24px, 3vw, 30px); letter-spacing: -.02em; line-height: 1.15; }
+    .service p { color: #a1a1a6; }
+    .service .note { font-size: 15px; color: #8e8e93; }
+    .service .btn { align-self: flex-start; margin-top: auto; background: #f5f5f7; color: #1d1d1f; }
+    .service .btn:hover { opacity: .88; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips span { font-size: 14px; padding: 6px 14px; border-radius: 980px; background: rgba(255, 255, 255, .08); color: #d2d2d7; }
+
+    /* ---------- О нас ---------- */
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .about-item {
+      padding: 32px;
+      border-radius: var(--g_radius);
+      background: var(--g_muted);
+      transition: background .25s;
+    }
+    .about-item:hover { background: color-mix(in srgb, var(--g_accent) 9%, var(--g_muted)); }
+    .about-item h3 { font-size: 24px; letter-spacing: -.02em; line-height: 1.15; }
+    .about-item p { margin-top: 10px; color: var(--g_ink-soft); font-size: 16px; }
+    .about-item .more { display: inline-block; margin-top: 18px; color: var(--g_accent); font-weight: 500; }
+    .about-item .more::after { content: " \203A"; }
+
+    /* ---------- Новости и CTA ---------- */
+    .news {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: clamp(28px, 4vw, 44px);
+      border-radius: var(--g_radius);
+      border: 1px solid var(--g_line);
+      background: var(--g_surface);
+      box-shadow: var(--g_shadow);
+    }
+    .news h3 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.02em; line-height: 1.15; }
+    .news p { margin-top: 8px; color: var(--g_ink-soft); }
+
+    .cta { text-align: center; padding: clamp(64px, 10vw, 128px) 0; }
+    .cta h2 { font-size: clamp(34px, 6vw, 68px); line-height: 1.05; letter-spacing: -.035em; max-width: 14em; margin-inline: auto; }
+    .cta p { margin: 20px auto 0; max-width: 32em; color: var(--g_ink-soft); font-size: clamp(17px, 2vw, 21px); line-height: 1.4; }
+    .cta .hero-actions { justify-content: center; }
+
+    /* ---------- Подвал ---------- */
+    .footer { background: var(--g_muted); padding: 36px 0 calc(36px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--g_ink-soft); }
+    .footer-top { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid var(--g_line); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0; }
+    .footer-links a:hover { color: var(--g_ink); text-decoration: underline; }
+    .footer-note { margin-top: 20px; max-width: 70em; line-height: 1.5; }
+
+    /* ---------- Адаптивность ---------- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .preview { transform: none; }
+      .card-wide, .card-side, .card-half { grid-column: span 6; }
+      .card { min-height: 260px; }
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .burger { display: block; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 6px 20px 20px;
+        font-size: 19px;
+        background: var(--g_bg);
+        border-bottom: 1px solid var(--g_line);
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: max-height .35s ease, opacity .25s, visibility .35s;
+      }
+      #menu-toggle:checked ~ .nav-links { max-height: 420px; opacity: 1; visibility: visible; }
+      .nav-links li { border-bottom: 1px solid var(--g_line); }
+      .nav-links li:last-child { border: 0; padding-top: 16px; }
+      .nav-links a { display: block; padding: 14px 0; color: var(--g_ink); }
+      .nav-links .nav-cta { text-align: center; padding: 14px 16px; }
+      .services { grid-template-columns: 1fr; }
+      .news { grid-template-columns: 1fr; }
+      .news .btn { width: 100%; }
+      .hero-actions .btn-primary { width: 100%; }
+      .brand { font-size: 14px; }
+    }
+
+    @media (max-width: 420px) {
+      .card-wide .ghost-num { font-size: 150px; }
+      .preview { padding: 16px 16px 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap" style="position: relative;">
+      <input type="checkbox" id="menu-toggle" aria-label="Открыть меню">
+      <div class="nav-bar">
+        <a class="brand" href="#top" aria-label="Надёжные облигации — наверх">
+          <span class="brand-mark" aria-hidden="true"></span>
+          надежные-облигации.рус
+        </a>
+        <label class="burger" for="menu-toggle" aria-hidden="true"><span></span></label>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#tables">Таблицы</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#news">Новости</a></li>
+        <li><a class="nav-cta" href="https://t.me/Doktor_Verhovtsev" target="_blank" rel="noopener">Написать</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Надёжные технологии <em>инвестирования</em></h1>
+          <p class="lead">Таблицы облигаций с актуальными параметрами рынка, оперативные чаты и помощь в управлении портфелем — от команды с многолетней репутацией.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/best-bond-list/">Список лучших облигаций</a>
+            <a class="btn btn-ghost" href="#services">Что мы предлагаем &#8250;</a>
+          </div>
+        </div>
+
+        <div class="preview" aria-hidden="true">
+          <div class="preview-tabs"><span>Лучшие</span><span>Флоатеры</span><span>ОФЗ-ПД</span></div>
+          <div class="preview-head"><span>Облигация</span><span>Купон</span><span>Доходность</span></div>
+          <div class="preview-row"><div class="bar w1"></div><div class="bar w2"></div><div class="bar hi w3"></div></div>
+          <div class="preview-row"><div class="bar w3"></div><div class="bar w1"></div><div class="bar hi w2"></div></div>
+          <div class="preview-row"><div class="bar w2"></div><div class="bar w3"></div><div class="bar hi w1"></div></div>
+          <div class="preview-row"><div class="bar w1"></div><div class="bar w2"></div><div class="bar hi w3"></div></div>
+          <div class="preview-row"><div class="bar w3"></div><div class="bar w1"></div><div class="bar hi w2"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Таблицы -->
+    <section class="section" id="tables" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Три таблицы. Всегда по рынку.</h2>
+          <p>Выбирайте нужный тип облигаций — параметры обновляются под текущую ситуацию на рынке.</p>
+        </div>
+
+        <div class="bento">
+          <a class="card card-wide" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/best-bond-list/">
+            <span class="ghost-num" aria-hidden="true">26</span>
+            <div>
+              <h3>Список лучших облигаций 2026</h3>
+              <p>Таблица облигаций с актуальными для текущего рынка параметрами.</p>
+            </div>
+            <span class="more">Открыть таблицу</span>
+          </a>
+
+          <a class="card card-side" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/floater-bond/">
+            <div>
+              <h3>Флоатеры</h3>
+              <p>Облигации с плавающим купоном.</p>
+            </div>
+            <span class="more">Открыть таблицу</span>
+          </a>
+
+          <a class="card card-half" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/%d0%be%d1%84%d0%b7-%d0%bf%d0%b4/">
+            <div>
+              <h3>ОФЗ-ПД</h3>
+              <p>Государственные облигации с фиксированным купоном.</p>
+            </div>
+            <span class="more">Открыть таблицу</span>
+          </a>
+
+          <a class="card card-half" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/%d0%ba%d0%b0%d0%bf%d0%b8%d1%82%d0%b0%d0%bb-%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d0%bd%d0%b8%d0%b5-%d1%81-%d0%bd%d1%83%d0%bb%d1%8f/">
+            <div>
+              <h3>Технологии капитала</h3>
+              <p>Как создавать и приумножать капитал с нуля.</p>
+            </div>
+            <span class="more">Читать</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Услуги -->
+    <section class="section dark" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Держите руку на пульсе капитала</h2>
+          <p>Два способа работать с облигациями: следить за рынком самому или доверить рутину профессионалам.</p>
+        </div>
+
+        <div class="services">
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 5 3 11.5l6 2.5 2.5 6L21 5Z"/><path d="m9 14 12-9"/></svg>
+            </div>
+            <h3>Оперативное информирование</h3>
+            <p>Наилучшие текущие котировки и рыночные изменения — в нашем чате в Telegram и чате в Max. Для тех, кто хочет следить за капиталом постоянно.</p>
+            <div class="chips"><span>Telegram</span><span>Max</span></div>
+            <p class="note">Чтобы стать участником, обратитесь к администратору. Приветствуется донат.</p>
+            <a class="btn" href="https://t.me/Doktor_Verhovtsev" target="_blank" rel="noopener">Вступить в чат</a>
+          </article>
+
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 7h18v12H3z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+            </div>
+            <h3>Управление портфелем</h3>
+            <p>Поможем создать портфель облигаций и управлять им. Для тех, кто ценит своё время и доверяет рутину профессионалам с многолетней репутацией.</p>
+            <p class="note">Обратитесь к администратору. Приветствуется донат.</p>
+            <a class="btn" href="https://t.me/Doktor_Verhovtsev" target="_blank" rel="noopener">Обсудить портфель</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- О нас -->
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>О нас</h2>
+          <p>Центр технологий, где облигации — это спокойный и понятный инструмент.</p>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-item">
+            <h3>Мы предлагаем</h3>
+            <p>Таблицы облигаций, оперативные чаты и сопровождение портфеля.</p>
+            <a class="more" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/">Подробнее</a>
+          </article>
+          <article class="about-item">
+            <h3>Сообщество</h3>
+            <p>Заметки, разборы и обсуждения для тех, кто инвестирует осознанно.</p>
+            <a class="more" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/%d0%b1%d0%bb%d0%be%d0%b3/">Перейти</a>
+          </article>
+          <article class="about-item">
+            <h3>О проекте</h3>
+            <p>Кто мы, чем занимаемся и почему нам доверяют.</p>
+            <a class="more" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/%d0%b3%d0%bb%d0%b0%d0%b2%d0%bd%d0%b0%d1%8f/">Узнать больше</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Новости -->
+    <section class="section" id="news" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="news">
+          <div>
+            <h3>Новости проекта</h3>
+            <p>Обновления таблиц, новые материалы и события сообщества.</p>
+          </div>
+          <a class="btn btn-primary" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/progect-news/">Читать новости</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Призыв -->
+    <section class="cta">
+      <div class="wrap">
+        <h2>Инвестируйте спокойно</h2>
+        <p>Напишите администратору — подскажем, с чего начать: с чата или с собственного портфеля облигаций.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://t.me/Doktor_Verhovtsev" target="_blank" rel="noopener">Написать в Telegram</a>
+          <a class="btn btn-ghost" href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/best-bond-list/">Смотреть таблицы &#8250;</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <span>&copy; 2026 МОУ &laquo;ЦТ &laquo;надежные-облигации.рус&raquo;</span>
+        <ul class="footer-links">
+          <li><a href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/best-bond-list/">Лучшие облигации</a></li>
+          <li><a href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/floater-bond/">Флоатеры</a></li>
+          <li><a href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/%d0%be%d1%84%d0%b7-%d0%bf%d0%b4/">ОФЗ-ПД</a></li>
+          <li><a href="https://xn----7sbbdkdhaixca8aues5l9c.xn--p1acf/progect-news/">Новости</a></li>
+        </ul>
+      </div>
+      <p class="footer-note">Материалы сайта носят информационный характер и не являются индивидуальной инвестиционной рекомендацией. Инвестиции в облигации связаны с рисками.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
